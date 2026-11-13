@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+*.tmp
+# Development-only material (not part of the released tool)
+PHASE_REPORT.md
+samples/
+scripts/
+RELEASING.md
