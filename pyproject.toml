@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pdfzi"
+version = "0.1.0"
+description = "Local-only PDF toolkit with a red-themed TUI and a scriptable CLI: compress, merge, split, and more."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "pdfzi contributors" }]
+keywords = ["pdf", "compress", "merge", "split", "tui", "cli"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "img2pdf>=0.6.3,<0.7",
+    "pikepdf>=10,<11",
+    "pillow>=13,<14",
+    "pypdfium2>=5,<6",
+    "textual>=8,<9",
+    "typer>=0.29,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/prompiriyag/pdfzi"
+Source = "https://github.com/prompiriyag/pdfzi"
+Issues = "https://github.com/prompiriyag/pdfzi/issues"
+Changelog = "https://github.com/prompiriyag/pdfzi/blob/main/CHANGELOG.md"
+
+[project.scripts]
+pdfzi = "pdfzi.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-xdist>=3.8.0",
+    "ruff>=0.17.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pdfzi"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "README.md", "LICENSE", "CHANGELOG.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# PTH enforces pathlib everywhere (Unicode-safe paths on every OS).
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "PTH", "C4", "RUF", "N"]
+
+[tool.ruff.lint.per-file-ignores]
+# Textual declares BINDINGS as plain class lists; its CSS is long lines of text.
+"src/pdfzi/tui/**" = ["RUF012"]
+"src/pdfzi/tui/theme.py" = ["E501"]
